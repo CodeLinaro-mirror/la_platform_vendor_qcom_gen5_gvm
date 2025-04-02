@@ -24,7 +24,7 @@ BOARD_RAMDISK_USE_LZ4 := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 
 
--include $(QCPATH)/common/gen5_gvm_gy/BoardConfigVendor.mk
+-include $(QCPATH)/common/gen5_gvm/BoardConfigVendor.mk
 
 # Some framework code requires this to enable BT
 BOARD_HAVE_BLUETOOTH := true

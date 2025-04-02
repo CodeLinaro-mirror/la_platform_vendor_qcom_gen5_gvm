@@ -76,9 +76,9 @@ ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
  LOCAL_MODULE_TAGS  := optional
  LOCAL_MODULE_CLASS := ETC
  ifeq ($(ENABLE_AB), true)
-   LOCAL_SRC_FILES := fstab_AB_dynamic_partition_variant.gen5_gy.qti
+   LOCAL_SRC_FILES := fstab_AB_dynamic_partition_variant.gen5_gvm.qti
  else
-   LOCAL_SRC_FILES := fstab_non_AB_dynamic_partition_variant.gen5_gy.qti
+   LOCAL_SRC_FILES := fstab_non_AB_dynamic_partition_variant.gen5_gvm.qti
  endif #ENABLE_AB
  LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
  include $(BUILD_PREBUILT)

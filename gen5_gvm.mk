@@ -1,7 +1,7 @@
 TARGET_BOARD_PLATFORM := gen5
 TARGET_BOOTLOADER_BOARD_NAME := gen5
 TARGET_BOARD_TYPE := auto
-TARGET_BOARD_SUFFIX := _gvm_gy
+TARGET_BOARD_SUFFIX := _gvm
 ENABLE_AIDL_VHAL := true
 ENABLE_AIDL_SENSOR := true
 # U-BRINGUP disable display
@@ -14,8 +14,8 @@ TARGET_DISABLE_DISPLAY_DLKM := false
 TARGET_DISABLE_AIS_DLKM := true
 TARGET_DISABLE_LIBVIRTDIAG := true
 
-#flag to differentiate b/w HQX and HGY builds
-TARGET_USES_GY := true
+# flag to differentiate b/w HQX and HGY builds
+# TARGET_USES_GY := true
 
 # Enable Smcinvoke based System Listeners
 TARGET_ENABLE_SMCI_SYSLISTENER := true
@@ -161,9 +161,9 @@ ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   RELAX_USES_LIBRARY_CHECK := true
 
   ifeq ($(ENABLE_AB), true)
-    PRODUCT_COPY_FILES += device/qcom/gen5_gvm_gy/fstab_AB_dynamic_partition_variant.gen5_gy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab_AB_dynamic_partition_variant.gen5_gvm.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
   else
-    PRODUCT_COPY_FILES += device/qcom/gen5_gvm_gy/fstab_non_AB_dynamic_partition_variant.gen5_gy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab_non_AB_dynamic_partition_variant.gen5_gvm.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
   endif
 endif
 
@@ -235,10 +235,10 @@ PRODUCT_PROPERTY_OVERRIDES += ro.control_privapp_permissions=enforce
 
 $(call inherit-product, packages/services/Car/car_product/build/car.mk)
 
-PRODUCT_NAME := gen5_gvm_gy
-PRODUCT_DEVICE := gen5_gvm_gy
+PRODUCT_NAME := gen5_gvm
+PRODUCT_DEVICE := gen5_gvm
 PRODUCT_BRAND := qti
-PRODUCT_MODEL := gen5_gvm_gy for arm64
+PRODUCT_MODEL := gen5_gvm for arm64
 
 PRODUCT_SOONG_NAMESPACES += hardware/qcom/wlan/qcwcn
 
@@ -446,12 +446,12 @@ PRODUCT_PACKAGES += \
 
 # MTMD enablement
 PRODUCT_COPY_FILES += \
-    device/qcom/gen5_gvm_gy/input-port-associations.xml:$(TARGET_COPY_OUT_VENDOR)/etc/input-port-associations.xml \
-    device/qcom/gen5_gvm_gy/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
+    device/qcom/gen5_gvm/input-port-associations.xml:$(TARGET_COPY_OUT_VENDOR)/etc/input-port-associations.xml \
+    device/qcom/gen5_gvm/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
 
-DEVICE_MANIFEST_FILE := device/qcom/gen5_gvm_gy/manifest.xml
+DEVICE_MANIFEST_FILE := device/qcom/gen5_gvm/manifest.xml
 DEVICE_MATRIX_FILE   := device/qcom/common/compatibility_matrix.xml
-DEVICE_FRAMEWORK_MANIFEST_FILE := device/qcom/gen5_gvm_gy/framework_manifest.xml
+DEVICE_FRAMEWORK_MANIFEST_FILE := device/qcom/gen5_gvm/framework_manifest.xml
 ifeq ($(TARGET_SINGLE_TREE), true)
   DEVICE_FRAMEWORK_MANIFEST_FILE := device/qcom/qssi_au/framework_manifest.xml
 endif
@@ -488,7 +488,7 @@ PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 #Enable vndk-sp Libraries
 PRODUCT_PACKAGES += vndk_package
 
-DEVICE_PACKAGE_OVERLAYS += device/qcom/gen5_gvm_gy/overlay
+DEVICE_PACKAGE_OVERLAYS += device/qcom/gen5_gvm/overlay
 
 # Enable flag to support slow devices
 TARGET_PRESIL_SLOW_BOARD := true

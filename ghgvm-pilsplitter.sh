@@ -6,7 +6,7 @@
 
 ###############################################################################################
 # This is the script to generate split PIL bins for Gunyah hypervisor                         #
-# Need to run this script from the device/qcom/gen5_gvm_gy directory                         #
+# Need to run this script from the device/qcom/gen5_gvm directory                         #
 # Before running this script full android build should be done and below directory is present #
 # device/qcom/msmnile-kernel with dtbs and Image present in the directory                     #
 ###############################################################################################
@@ -22,7 +22,7 @@ MKDTBOIMGPY_PATH=$ROOT_DIR/system/libufdt/utils/src
 IMG_PATH="$PWD/../gen5-kernel"
 #echo "$IMG_PATH"
 cd $IMG_PATH
-OUTPATH="$PWD/../../../out/target/product/gen5_gvm_gy"
+OUTPATH="$PWD/../../../out/target/product/gen5_gvm"
 #echo "$OUTPATH"
 #echo "$QCPATH"
 SECURITY_PROFILE_PATH="$QCPATH/securemsm/security_profiles"
