@@ -14,6 +14,7 @@ TARGET_DISABLE_DISPLAY_DLKM := false
 TARGET_DISABLE_AIS_DLKM := true
 TARGET_DISABLE_LIBVIRTDIAG := true
 
+ENABLE_IP_OVER_USB_GEN5 := true
 # flag to differentiate b/w HQX and HGY builds
 # TARGET_USES_GY := true
 
