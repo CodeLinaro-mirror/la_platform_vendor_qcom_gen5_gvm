@@ -58,11 +58,6 @@ on early-init && property:ro.boot.audio=audioreach_vio
      setprop ro.hardware.audio.primary "gen4.ar"
      setprop ro.hardware.sound_trigger.primary "gen4.ar"
 
-on early-init && property:ro.boot.audio=awe
-     exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -b -s -d /vendor/lib/modules msm_virtio_snd audio_variant="awe"
-     setprop ro.hardware.audio.primary "gen5.awe"
-     setprop ro.hardware.sound_trigger.primary "gen5.awe"
-
 on init
     write /dev/stune/foreground/schedtune.sched_boost_no_override 1
     write /dev/stune/top-app/schedtune.sched_boost_no_override 1
