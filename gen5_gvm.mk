@@ -150,9 +150,11 @@ ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   RELAX_USES_LIBRARY_CHECK := true
 
   ifeq ($(ENABLE_AB), true)
-    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab_AB_dynamic_partition_variant.gen5_gy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
   else
-    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab_non_AB_dynamic_partition_variant.gen5_gy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
   endif
 endif
 
@@ -538,6 +540,7 @@ PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 #add vndservicemanager
 PRODUCT_PACKAGES += vndservicemanager
 PRODUCT_PACKAGES += fstab.qcom
+PRODUCT_PACKAGES += fstab.hqx.nord.qcom
 
 #add neuralnetworks
 PRODUCT_PACKAGES += android.hardware.neuralnetworks@1.0.vendor \
