@@ -34,10 +34,11 @@
 import /vendor/etc/init/hw/init.qti.kernel.rc
 
 on early-init
-#    chown system system /sys/kernel/boot_kpi/kpi_values
+    chown system system /sys/kernel/boot_kpi/kpi_values
     write /proc/sys/kernel/sched_boost 1
     symlink /data/tombstones /tombstones
-    write /dev/kmsg "boot_kpi: M - INITRC Userspace Start"
+    write /dev/console "boot_kpi: M - INITRC Userspace Start"
+    write /sys/kernel/boot_kpi/kpi_values "M - INITRC Userspace Start"
 
 # Elite
 on early-init && property:ro.boot.audio=""
@@ -148,16 +149,20 @@ on property:vendor.usb.controller=*
     setprop sys.usb.controller ${vendor.usb.controller}
 
 on property:init.svc.zygote=running
-     write /dev/kmsg "boot_kpi:M - USER Zygote Start"
+     write /dev/console "boot_kpi:M - USER Zygote Start"
+     write /sys/kernel/boot_kpi/kpi_values "M - USER Zygote Start"
 
 on property:service.bootanim.exit=0
-    write /dev/kmsg "boot_kpi: K - USER Boot Animation Start"
+    write /dev/console "boot_kpi: K - USER Boot Animation Start"
+    write /sys/kernel/boot_kpi/kpi_values "M - USER Boot Animation Start"
 
 on property:sys.boot_completed=1
-    write /dev/kmsg "boot_kpi: K - USER Android Boot Complete"
+    write /dev/console "boot_kpi: K - USER Android Boot Complete"
+    write /sys/kernel/boot_kpi/kpi_values "M - USER Android Boot Complete"
 
 on property:init.svc.surfaceflinger=running
-    write /dev/kmsg "boot_kpi: M - USER SurfaceFlinger Start"
+    write /dev/console "boot_kpi: M - USER SurfaceFlinger Start"
+    write /sys/kernel/boot_kpi/kpi_values "M - USER SurfaceFlinger Start"
 
 
 #pd-mapper
