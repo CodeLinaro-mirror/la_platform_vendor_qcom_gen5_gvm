@@ -164,6 +164,8 @@ on property:init.svc.surfaceflinger=running
     write /dev/console "boot_kpi: M - USER SurfaceFlinger Start"
     write /sys/kernel/boot_kpi/kpi_values "M - USER SurfaceFlinger Start"
 
+on property:vendor.all.modules.ready=1
+    write /dev/console "boot_kpi: M - Vendor Modprobe completed"
 
 #pd-mapper
 service vendor.pd_mapper /vendor/bin/pd-mapper
