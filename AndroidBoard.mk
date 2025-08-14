@@ -72,17 +72,39 @@ include device/qcom/vendor-common/MergeConfig.mk
 
 ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
  include $(CLEAR_VARS)
+ LOCAL_MODULE       := fstab.hqx.nord.qcom
+ LOCAL_MODULE_TAGS  := optional
+ LOCAL_MODULE_CLASS := ETC
+ ifeq ($(ENABLE_AB), true)
+   LOCAL_SRC_FILES := fstab/nord/fstab_AB_dynamic_partition_variant.nord_hqx.qti
+ else
+   LOCAL_SRC_FILES := fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hqx.qti
+ endif #ENABLE_AB
+ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+ include $(BUILD_PREBUILT)
+
+ include $(CLEAR_VARS)
  LOCAL_MODULE       := fstab.qcom
  LOCAL_MODULE_TAGS  := optional
  LOCAL_MODULE_CLASS := ETC
  ifeq ($(ENABLE_AB), true)
-   LOCAL_SRC_FILES := fstab_AB_dynamic_partition_variant.gen5_gy.qti
+   LOCAL_SRC_FILES := fstab/nord/fstab_AB_dynamic_partition_variant.nord_hgy.qti
  else
-   LOCAL_SRC_FILES := fstab_non_AB_dynamic_partition_variant.gen5_gy.qti
+   LOCAL_SRC_FILES := fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hgy.qti
  endif #ENABLE_AB
  LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
  include $(BUILD_PREBUILT)
 else
+ include $(CLEAR_VARS)
+ LOCAL_MODULE       := fstab.hqx.nord.qcom
+ LOCAL_MODULE_CLASS := ETC
+ LOCAL_SRC_FILES    := fstab.gen5.qti
+ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+ ifeq ($(ENABLE_VENDOR_IMAGE), true)
+   LOCAL_POST_INSTALL_CMD := echo $(VENDOR_FSTAB_ENTRY) >> $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
+ endif
+ include $(BUILD_PREBUILT)
+
  include $(CLEAR_VARS)
  LOCAL_MODULE       := fstab.qcom
  LOCAL_MODULE_CLASS := ETC
@@ -92,6 +114,7 @@ else
    LOCAL_POST_INSTALL_CMD := echo $(VENDOR_FSTAB_ENTRY) >> $(LOCAL_MODULE_PATH)/$(LOCAL_MODULE)
  endif
  include $(BUILD_PREBUILT)
+
 endif ##BOARD_DYNAMIC_PARTITION_ENABLE
 
 #----------------------------------------------------------------------

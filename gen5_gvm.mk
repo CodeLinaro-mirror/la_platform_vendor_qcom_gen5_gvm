@@ -118,7 +118,7 @@ endif
 TARGET_USES_AOSP_FOR_WLAN := true
 
 
-BOARD_HAS_QCOM_WLAN := false
+BOARD_HAS_QCOM_WLAN := true
 
 
 ENABLE_CAR_POWER_MANAGER := true
@@ -150,9 +150,11 @@ ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   RELAX_USES_LIBRARY_CHECK := true
 
   ifeq ($(ENABLE_AB), true)
-    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab_AB_dynamic_partition_variant.gen5_gy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
   else
-    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab_non_AB_dynamic_partition_variant.gen5_gy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
   endif
 endif
 
@@ -288,15 +290,18 @@ TARGET_USES_QMAA_OVERRIDE_SYNX := false
 TARGET_USES_QMAA_OVERRIDE_TFTP := false
 TARGET_USES_QMAA_OVERRIDE_USB := true
 TARGET_USES_QMAA_OVERRIDE_VIBRATOR := false
-TARGET_USES_QMAA_OVERRIDE_VIDEO   := false
+TARGET_USES_QMAA_OVERRIDE_VIDEO   := true
 TARGET_USES_QMAA_OVERRIDE_VPP := false
 TARGET_USES_QMAA_OVERRIDE_WFD     := false
-TARGET_USES_QMAA_OVERRIDE_WLAN    := false
-TARGET_KERNEL_DLKM_SECURE_MSM_OVERRIDE := false
-TARGET_KERNEL_DLKM_SECUREMSM_QTEE_OVERRIDE := false
+TARGET_USES_QMAA_OVERRIDE_WLAN    := true
+TARGET_KERNEL_DLKM_SECURE_MSM_OVERRIDE := true
+TARGET_KERNEL_DLKM_SECUREMSM_QTEE_OVERRIDE := true
 TARGET_KERNEL_DLKM_DISABLE := true
 TARGET_KERNEL_DLKM_DISPLAY_OVERRIDE := true
 TARGET_KERNEL_DLKM_AUDIO_OVERRIDE := true
+TARGET_KERNEL_DLKM_WLAN_OVERRIDE := true
+TARGET_USES_QMAA_OVERRIDE_HSI2S := false
+TARGET_KERNEL_DLKM_VIDEO_OVERRIDE := true
 
 TARGET_ENABLE_QSEECOM := true
 #Full QMAA HAL List
@@ -535,6 +540,7 @@ PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 #add vndservicemanager
 PRODUCT_PACKAGES += vndservicemanager
 PRODUCT_PACKAGES += fstab.qcom
+PRODUCT_PACKAGES += fstab.hqx.nord.qcom
 
 #add neuralnetworks
 PRODUCT_PACKAGES += android.hardware.neuralnetworks@1.0.vendor \

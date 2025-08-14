@@ -25,6 +25,10 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Changes from Qualcomm Technologies, Inc. are provided under the following license:
+# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+
 # Android fstab file.
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
@@ -33,18 +37,16 @@
 # Currently we dont have e2fsck compiled. So fs check would failed.
 
 #<src>                                                 <mnt_point>            <type>  <mnt_flags and options>                            <fs_mgr_flags>
-system                                                 /system                 ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect
-system_ext                                             /system_ext             ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect
-vendor                                                 /vendor                 ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect
-system_dlkm                                            /system_dlkm            ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect
-vendor_dlkm                                            /vendor_dlkm            ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect
-/dev/block/by-name/metadata                            /metadata               f2fs    noatime,nosuid,nodev                                 defaults
-/dev/block/by-name/userdata                            /data                   f2fs    rw,noatime,nosuid,nodev                              defaults
+system                                                 /system                 ext4    ro,barrier=1,discard                                 wait,avb,logical,first_stage_mount,avb_keys=/avb/qcar-gsi.avbpubkey
+system_ext                                             /system_ext             ext4    ro,barrier=1,discard                                 wait,avb,logical,first_stage_mount
+vendor                                                 /vendor                 ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,avb
+/dev/block/by-name/metadata                            /metadata               ext4    noatime,nosuid,nodev,discard                         wait,formattable,first_stage_mount
+/dev/block/by-name/userdata                            /data                   f2fs    rw,noatime,nosuid,nodev                              latemount,wait,check,quota,reservedsize=128M,checkpoint=fs
 /devices/platform/soc/8804000.sdhci/mmc_host*          /storage/sdcard1        vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto,encryptable=footer
 /devices/platform/soc/1da4000.ufshc_card/host*         /storage/sdcard1        vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto,encryptable=footer
-/dev/block/modem                                       /vendor/firmware_mnt    vfat    ro,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0               defaults,slotselect
-/dev/block/persist                                     /mnt/vendor/persist     ext4    rw,noatime                                            defaults
-/dev/block/bluetooth                                   /vendor/bt_firmware     vfat    ro,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0            defaults,slotselect
+/dev/block/modem                                       /vendor/firmware_mnt    vfat    ro,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0 defaults
+/dev/block/persist                                     /mnt/vendor/persist     ext4    rw,noatime                                           defaults
+/dev/block/bluetooth                                   /vendor/bt_firmware     vfat    ro,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0 defaults
 # Need to have this entry in here even though the mount point itself is no longer needed.
 # The update_engine code looks for this entry in order to determine the boot device address
 # and fails if it does not find it.
