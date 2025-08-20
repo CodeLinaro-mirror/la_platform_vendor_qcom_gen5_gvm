@@ -529,6 +529,10 @@ PRODUCT_PACKAGES_DEBUG += bootctl
 PRODUCT_PACKAGES += \
    update_engine_sideload
 
+#Enable fuzzers for userdebug builds
+PRODUCT_PACKAGES_DEBUG += aidl_fuzzer_bootctrl
+PRODUCT_PACKAGES_DEBUG += vhalserver_fuzzer
+
 #PRODUCT_PACKAGES += android.hardware.automotive.audiocontrol@1.0-service
 
 PRODUCT_PACKAGES += android.hardware.health-service.example \
