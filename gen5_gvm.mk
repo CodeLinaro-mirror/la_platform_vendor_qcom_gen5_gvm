@@ -65,7 +65,7 @@ PRODUCT_VENDOR_PROPERTIES += \
 # Enable support for APEX updates
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
-SHIPPING_API_LEVEL := 34
+SHIPPING_API_LEVEL := 36
 PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
 
 ALLOW_MISSING_DEPENDENCIES := true

@@ -205,13 +205,17 @@ service audiod /vendor/bin/audiod
     capabilities BLOCK_SUSPEND
 
 service vendor.mdm_helper /vendor/bin/mdm_helper
+    user system
     class core
     group system wakelock
     disabled
 
 service vendor.mdm_launcher /vendor/bin/sh /vendor/bin/init.mdm.sh
+    user system
+    group system
     class main
     oneshot
+    disabled
 
 on property:vold.decrypt=trigger_restart_framework
     start cnss_diag
