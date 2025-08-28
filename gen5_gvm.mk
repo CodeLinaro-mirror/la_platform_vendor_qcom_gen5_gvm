@@ -33,15 +33,6 @@ PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_MANUFACTURER := Qualcomm
 
 ifeq ($(TARGET_SINGLE_TREE), true)
-  PRODUCT_PRODUCT_VNDK_VERSION := current
-  #TODO(amutyala) to revert once QSSI 15 component created
-  #This change requires to build super image (QSSI15 + V14)
-  ifeq (,$(filter VanillaIceCream V 35, $(PLATFORM_VNDK_VERSION)))
-    PRODUCT_EXTRA_VNDK_VERSIONS := 33
-  else
-    PRODUCT_EXTRA_VNDK_VERSIONS := 33 34
-  endif
-
   PRODUCT_ENFORCE_PRODUCT_PARTITION_INTERFACE := true
 
   # Enable debugfs restrictions
@@ -98,9 +89,9 @@ BOARD_AVB_ENABLE := true
 BOARD_USES_QCNE := false
 TARGET_BOARD_AUTO := true
 TARGET_USES_AOSP := true
-#TODO(amutyala) to revert this once QSSI 15 component created
-ifeq (,$(filter VanillaIceCream V 35, $(PLATFORM_VNDK_VERSION)))
-  TARGET_USES_GAS := false
+# For single tree based build TARGET_USES_GAS needs to be set to true in the device makefile
+ifeq ($(TARGET_SINGLE_TREE), true)
+  TARGET_USES_GAS := true
 endif
 TARGET_USES_QCOM_BSP := false
 TARGET_NO_TELEPHONY := true
@@ -481,9 +472,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 PRODUCT_VENDOR_MOVE_ENABLED := true
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
-
-#Enable vndk-sp Libraries
-PRODUCT_PACKAGES += vndk_package
 
 DEVICE_PACKAGE_OVERLAYS += device/qcom/gen5_gvm_gy/overlay
 
