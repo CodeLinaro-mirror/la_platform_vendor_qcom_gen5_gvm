@@ -290,6 +290,8 @@ endif
 
 #Enable VNDK Compliance
 BOARD_VNDK_VERSION:=current
+$(call add_soong_config_var,qti,IS_ANDROID_SHIPPING_W)
+$(call soong_config_set,qti,IS_ANDROID_SHIPPING_W,true)
 
 #################################################################################
 # This is the End of BoardConfig.mk file.
