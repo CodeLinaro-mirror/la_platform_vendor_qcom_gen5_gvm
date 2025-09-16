@@ -514,13 +514,19 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@5.0-impl
 
 #enable gptp
-PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += qgptp\
+            gptp_cfg.ini \
             libgptp \
             libgptp_test
 
+#enable qeavb
+PRODUCT_PACKAGES += qavb_app \
+            multiqavb_app \
+            libqavtp
+
 #eavb fe lib and app
-#PRODUCT_PACKAGES += libeavbfe \
-#            eavbfe_test
+PRODUCT_PACKAGES += libeavbfe \
+            eavbfe_test
 
 #Boot control HAL test app
 PRODUCT_PACKAGES_DEBUG += bootctl
