@@ -14,6 +14,9 @@ TARGET_DISABLE_DISPLAY_DLKM := false
 TARGET_DISABLE_AIS_DLKM := true
 TARGET_DISABLE_LIBVIRTDIAG := true
 
+# Enable dual wlan on HAL
+TARGET_SUPPORT_DUAL_WLAN:= true
+
 # Enable Smcinvoke based System Listeners
 TARGET_ENABLE_SMCI_SYSLISTENER := true
 
@@ -494,7 +497,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 #----------------------------------------------------------------------
 ifeq ($(strip $(BOARD_HAS_QCOM_WLAN)),true)
 # Multiple chips
-TARGET_WLAN_CHIP := qca6390 qca6490 kiwi_v2 qcn7605
+TARGET_WLAN_CHIP := qca6390 qca6490 kiwi_v2 qcn7605 qca6490_cnss2
 include device/qcom/wlan/msmnile_au/wlan.mk
 endif
 
