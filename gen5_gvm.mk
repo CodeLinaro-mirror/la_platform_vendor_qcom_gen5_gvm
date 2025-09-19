@@ -803,6 +803,13 @@ PRODUCT_VENDOR_PROPERTIES += persist.bluetooth.enablenewavrcp=false
 # Add gsi avb keys
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 
+# Install new BT HAL bins
+PRODUCT_PACKAGES += android.hardware.bluetooth-service-qti1
+PRODUCT_PACKAGES += android.hardware.bluetooth-service-qti1.rc
+
+# Set default SOC type for new BT
+PRODUCT_PROPERTY_OVERRIDES += persist.vendor.qcom.bluetooth.soc1=rome
+
 ifeq ($(TARGET_SINGLE_TREE), true)
   # Include mainline components and QSSI whitelist
   ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
