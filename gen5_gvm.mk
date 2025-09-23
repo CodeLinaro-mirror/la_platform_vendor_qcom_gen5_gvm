@@ -82,7 +82,7 @@ ifeq ($(ENABLE_VIRTUAL_AB), true)
     $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
     $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/android_t_baseline.mk)
   endif
-  PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := gz
+  PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := lz4
 endif
 # Enable AVB 2.0
 BOARD_AVB_ENABLE := true
@@ -315,7 +315,7 @@ ifeq ($(ENABLE_VENDOR_IMAGE),)
   ENABLE_VENDOR_IMAGE := false
 endif
 
-TARGET_KERNEL_VERSION := 6.1
+TARGET_KERNEL_VERSION := 6.12
 TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 
 #Enable llvm support for kernel
