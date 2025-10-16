@@ -645,8 +645,6 @@ PRODUCT_VENDOR_PROPERTIES += media.stagefright.enable-player=true \
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.use_data_netmgrd=true \
                             persist.vendor.data.mode=concurrent
 
-#system props for time-services
-PRODUCT_VENDOR_PROPERTIES += persist.timed.enable=true
 
 # system prop for opengles version
 # 196608 is decimal for 0x30000 to report version 3
@@ -660,8 +658,6 @@ PRODUCT_VENDOR_PROPERTIES += bt.max.hfpclient.connections=1
 # system prop to turn on CdmaLTEPhone always
 PRODUCT_VENDOR_PROPERTIES += telephony.lteOnCdmaDevice=1
 
-#Simulate sdcard on /data/media
-PRODUCT_VENDOR_PROPERTIES += persist.fuse_sdcard=true
 
 #system prop for wipower support
 PRODUCT_VENDOR_PROPERTIES += ro.bluetooth.emb_wp_mode=false \
