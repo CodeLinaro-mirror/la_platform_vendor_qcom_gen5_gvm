@@ -679,17 +679,6 @@ PRODUCT_VENDOR_PROPERTIES += ro.qc.sdk.audio.fluencetype=none \
                             persist.audio.fluence.voicerec=false \
                             persist.audio.fluence.speaker=true
 
-# system prop for RmNet Data
-PRODUCT_VENDOR_PROPERTIES += persist.rmnet.data.enable=true \
-                            persist.data.wda.enable=true \
-                            persist.data.df.dl_mode=5 \
-                            persist.data.df.ul_mode=5 \
-                            persist.data.df.agg.dl_pkt=10 \
-                            persist.data.df.agg.dl_size=4096 \
-                            persist.data.df.mux_count=8 \
-                            persist.data.df.iwlan_mux=9 \
-                            persist.data.df.dev_name=rmnet_usb0
-
 # property to enable user to access Google WFD settings
 PRODUCT_VENDOR_PROPERTIES += persist.debug.wfd.enable=1
 
