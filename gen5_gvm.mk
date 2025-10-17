@@ -124,6 +124,9 @@ TARGET_GVMGH_SPECIFIC := false
 # RRO configuration
 TARGET_USES_RRO := true
 
+#Install Fastadas test apps
+INSTALL_FASTADS_TEST_APPS := true
+
 TARGET_HAS_VIRTIO_FASTRPC := false
 
 TARGET_HAS_HYBRID_FASTRPC := true
