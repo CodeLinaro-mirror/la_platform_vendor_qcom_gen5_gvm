@@ -131,6 +131,12 @@ on boot
     chown cameraserver cameraserver /dev/cpuset/camera-daemon/tasks
     chmod 0660 /dev/cpuset/camera-daemon/tasks
 
+# vnw
+    write /dev/ptpshm 0
+    write /dev/sctptpshm 0
+    chmod 0660 /dev/ptpshm
+    chmod 0660 /dev/sctptpshm
+
 #USB controller configuration
     setprop vendor.usb.rndis.func.name "gsi"
     setprop vendor.usb.rmnet.func.name "gsi"
