@@ -338,6 +338,9 @@ ifeq ($(TARGET_ENABLE_FASTRPC_TEST), true)
  PRODUCT_PACKAGES_DEBUG += calculator
  PRODUCT_PACKAGES_DEBUG += libcalculator
  PRODUCT_PACKAGES_DEBUG += libcalculator_skel
+ PRODUCT_PACKAGES_DEBUG += hap_example
+ PRODUCT_PACKAGES_DEBUG += libhap_example
+ PRODUCT_PACKAGES_DEBUG += libhap_example_skel
 endif
 
 #Android EGL implementation
