@@ -659,21 +659,11 @@ PRODUCT_VENDOR_PROPERTIES += ro.vendor.use_data_netmgrd=true \
 # 196610 is decimal for 0x30002 to report version 3.2
 PRODUCT_VENDOR_PROPERTIES += ro.opengles.version=196610
 
-# system property for maximum number of HFP client connections
-PRODUCT_VENDOR_PROPERTIES += bt.max.hfpclient.connections=1
-
 # system prop to turn on CdmaLTEPhone always
 PRODUCT_VENDOR_PROPERTIES += telephony.lteOnCdmaDevice=1
 
 
-#system prop for wipower support
-PRODUCT_VENDOR_PROPERTIES += ro.bluetooth.emb_wp_mode=false \
-                            ro.bluetooth.wipower=false
-
-PRODUCT_VENDOR_PROPERTIES += persist.vendor.service.bt.a2dp.sink=true \
-                            persist.vendor.btstack.enable.splita2dp=false \
-                            persist.vendor.service.bdroid.sibs=false \
-                            persist.bt.clock_boottime_alarm=false
+PRODUCT_VENDOR_PROPERTIES += persist.vendor.service.bdroid.sibs=false
 
 # system prop for Hardware type Automotive
 PRODUCT_VENDOR_PROPERTIES += ro.hardware.type=automotive
@@ -793,15 +783,6 @@ PRODUCT_VENDOR_PROPERTIES += persist.vendor.car.lpm=true
 
 # default wifi country code
 PRODUCT_VENDOR_PROPERTIES += ro.boot.wificountrycode=us
-
-# The property "persist.bluetooth.enablenewavrcp" is introduced in AOSP.
-# See commit e63f6d6bda16bd94d43537fc5db754a103c6a757
-# (1) If the property is set as true, it indicates that AVRCP(TG) is enabled.
-# (2) If the property is set as false, it indicates that AVRCP(CT) is enabled.
-# In Fluoride Bluetooth stack, the default value for the property is true. This is valid with Mobile SP.
-# However in Automotive SP, AVRCP(CT) is enabled in Car UI.
-# So the property should be set as false.
-PRODUCT_VENDOR_PROPERTIES += persist.bluetooth.enablenewavrcp=false
 
 # Add gsi avb keys
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey
