@@ -721,9 +721,6 @@ PRODUCT_VENDOR_PROPERTIES += audio.offload.gapless.enabled=true
 # initialize QCA1530 detection
 PRODUCT_VENDOR_PROPERTIES += sys.qca1530=detect
 
-# Enable stm events
-PRODUCT_VENDOR_PROPERTIES += persist.debug.coresight.config=stm-events
-
 #Bringup properties
 PRODUCT_VENDOR_PROPERTIES += persist.sys.force_sw_gles=1 \
                             persist.vendor.radio.atfwd.start=true \
