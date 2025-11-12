@@ -755,9 +755,6 @@ PRODUCT_VENDOR_PROPERTIES += ro.lmk.kill_heaviest_task=true \
 #Property to enable scroll pre-obtain view
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.scroll.preobtain.enable=true
 
-#Expose aux camera for below packages
-PRODUCT_VENDOR_PROPERTIES += vendor.camera.aux.packagelist=org.codeaurora.snapcam
-
 #Display mirroring
 PRODUCT_VENDOR_PROPERTIES += vendor.display.builtin_mirroring=true
 
