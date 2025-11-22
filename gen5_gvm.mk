@@ -341,6 +341,8 @@ ifeq ($(TARGET_ENABLE_FASTRPC_TEST), true)
  PRODUCT_PACKAGES_DEBUG += hap_example
  PRODUCT_PACKAGES_DEBUG += libhap_example
  PRODUCT_PACKAGES_DEBUG += libhap_example_skel
+ PRODUCT_PACKAGES_DEBUG += dspqueue_sample
+ PRODUCT_PACKAGES_DEBUG += libdspqueue_sample_skel
 endif
 
 #Android EGL implementation
