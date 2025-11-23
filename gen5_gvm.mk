@@ -124,6 +124,9 @@ TARGET_GVMGH_SPECIFIC := false
 # RRO configuration
 TARGET_USES_RRO := true
 
+#Install Fastadas test apps
+INSTALL_FASTADS_TEST_APPS := true
+
 TARGET_HAS_VIRTIO_FASTRPC := false
 
 TARGET_HAS_HYBRID_FASTRPC := true
@@ -281,7 +284,7 @@ TARGET_USES_QMAA_OVERRIDE_SENSORS := false
 TARGET_USES_QMAA_OVERRIDE_SMCINVOKE := true
 TARGET_USES_QMAA_OVERRIDE_SOTER := false
 TARGET_USES_QMAA_OVERRIDE_SPCOM_UTEST := false
-TARGET_USES_QMAA_OVERRIDE_SYNX := false
+TARGET_USES_QMAA_OVERRIDE_SYNX := true
 TARGET_USES_QMAA_OVERRIDE_TFTP := false
 TARGET_USES_QMAA_OVERRIDE_USB := true
 TARGET_USES_QMAA_OVERRIDE_VIBRATOR := false
@@ -297,6 +300,7 @@ TARGET_KERNEL_DLKM_AUDIO_OVERRIDE := true
 TARGET_KERNEL_DLKM_WLAN_OVERRIDE := true
 TARGET_USES_QMAA_OVERRIDE_HSI2S := true
 TARGET_KERNEL_DLKM_VIDEO_OVERRIDE := true
+TARGET_KERNEL_DLKM_SYNX_OVERRIDE := true
 
 #Full QMAA HAL List
 QMAA_HAL_LIST := audio video camera display sensors gps
@@ -334,6 +338,9 @@ ifeq ($(TARGET_ENABLE_FASTRPC_TEST), true)
  PRODUCT_PACKAGES_DEBUG += calculator
  PRODUCT_PACKAGES_DEBUG += libcalculator
  PRODUCT_PACKAGES_DEBUG += libcalculator_skel
+ PRODUCT_PACKAGES_DEBUG += hap_example
+ PRODUCT_PACKAGES_DEBUG += libhap_example
+ PRODUCT_PACKAGES_DEBUG += libhap_example_skel
 endif
 
 #Android EGL implementation
@@ -518,7 +525,9 @@ PRODUCT_PACKAGES += qavb_app \
 
 #eavb fe lib and app
 PRODUCT_PACKAGES += libeavbfe \
-            eavbfe_test
+            eavbfe_test \
+            libqavb_fe_pcm_plugin \
+            tinyalsa_eavbfe
 
 #Boot control HAL test app
 PRODUCT_PACKAGES_DEBUG += bootctl
@@ -645,8 +654,6 @@ PRODUCT_VENDOR_PROPERTIES += media.stagefright.enable-player=true \
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.use_data_netmgrd=true \
                             persist.vendor.data.mode=concurrent
 
-#system props for time-services
-PRODUCT_VENDOR_PROPERTIES += persist.timed.enable=true
 
 # system prop for opengles version
 # 196608 is decimal for 0x30000 to report version 3
@@ -654,23 +661,11 @@ PRODUCT_VENDOR_PROPERTIES += persist.timed.enable=true
 # 196610 is decimal for 0x30002 to report version 3.2
 PRODUCT_VENDOR_PROPERTIES += ro.opengles.version=196610
 
-# system property for maximum number of HFP client connections
-PRODUCT_VENDOR_PROPERTIES += bt.max.hfpclient.connections=1
-
 # system prop to turn on CdmaLTEPhone always
 PRODUCT_VENDOR_PROPERTIES += telephony.lteOnCdmaDevice=1
 
-#Simulate sdcard on /data/media
-PRODUCT_VENDOR_PROPERTIES += persist.fuse_sdcard=true
 
-#system prop for wipower support
-PRODUCT_VENDOR_PROPERTIES += ro.bluetooth.emb_wp_mode=false \
-                            ro.bluetooth.wipower=false
-
-PRODUCT_VENDOR_PROPERTIES += persist.vendor.service.bt.a2dp.sink=true \
-                            persist.vendor.btstack.enable.splita2dp=false \
-                            persist.vendor.service.bdroid.sibs=false \
-                            persist.bt.clock_boottime_alarm=false
+PRODUCT_VENDOR_PROPERTIES += persist.vendor.service.bdroid.sibs=false
 
 # system prop for Hardware type Automotive
 PRODUCT_VENDOR_PROPERTIES += ro.hardware.type=automotive
@@ -685,17 +680,6 @@ PRODUCT_VENDOR_PROPERTIES += ro.qc.sdk.audio.fluencetype=none \
                             persist.audio.fluence.voicecall=true \
                             persist.audio.fluence.voicerec=false \
                             persist.audio.fluence.speaker=true
-
-# system prop for RmNet Data
-PRODUCT_VENDOR_PROPERTIES += persist.rmnet.data.enable=true \
-                            persist.data.wda.enable=true \
-                            persist.data.df.dl_mode=5 \
-                            persist.data.df.ul_mode=5 \
-                            persist.data.df.agg.dl_pkt=10 \
-                            persist.data.df.agg.dl_size=4096 \
-                            persist.data.df.mux_count=8 \
-                            persist.data.df.iwlan_mux=9 \
-                            persist.data.df.dev_name=rmnet_usb0
 
 # property to enable user to access Google WFD settings
 PRODUCT_VENDOR_PROPERTIES += persist.debug.wfd.enable=1
@@ -771,9 +755,6 @@ PRODUCT_VENDOR_PROPERTIES += ro.lmk.kill_heaviest_task=true \
 #Property to enable scroll pre-obtain view
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.scroll.preobtain.enable=true
 
-#Expose aux camera for below packages
-PRODUCT_VENDOR_PROPERTIES += vendor.camera.aux.packagelist=org.codeaurora.snapcam
-
 #Display mirroring
 PRODUCT_VENDOR_PROPERTIES += vendor.display.builtin_mirroring=true
 
@@ -790,15 +771,6 @@ PRODUCT_VENDOR_PROPERTIES += persist.vendor.car.lpm=true
 
 # default wifi country code
 PRODUCT_VENDOR_PROPERTIES += ro.boot.wificountrycode=us
-
-# The property "persist.bluetooth.enablenewavrcp" is introduced in AOSP.
-# See commit e63f6d6bda16bd94d43537fc5db754a103c6a757
-# (1) If the property is set as true, it indicates that AVRCP(TG) is enabled.
-# (2) If the property is set as false, it indicates that AVRCP(CT) is enabled.
-# In Fluoride Bluetooth stack, the default value for the property is true. This is valid with Mobile SP.
-# However in Automotive SP, AVRCP(CT) is enabled in Car UI.
-# So the property should be set as false.
-PRODUCT_VENDOR_PROPERTIES += persist.bluetooth.enablenewavrcp=false
 
 # Add gsi avb keys
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey

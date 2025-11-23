@@ -37,7 +37,7 @@
 # Currently we dont have e2fsck compiled. So fs check would failed.
 
 #<src>                                                 <mnt_point>            <type>  <mnt_flags and options>                            <fs_mgr_flags>
-system                                                 /system                 ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect,avb
+system                                                 /system                 ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect,avb,avb_keys=/avb/qcar-gsi.avbpubkey
 system_ext                                             /system_ext             ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect,avb
 product                                                /product                ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect,avb
 vendor                                                 /vendor                 ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,slotselect,avb
@@ -48,6 +48,7 @@ vendor_dlkm                                            /vendor_dlkm            e
 /devices/platform/soc/8804000.sdhci/mmc_host*          /storage/sdcard1        vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto,encryptable=footer
 /devices/platform/soc/1da4000.ufshc_card/host*         /storage/sdcard1        vfat    nosuid,nodev                                         wait,voldmanaged=sdcard1:auto,encryptable=footer
 /dev/block/modem                                       /vendor/firmware_mnt    vfat    ro,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0               defaults,slotselect
+/dev/block/dsp                                         /vendor/dsp             ext4    ro,nosuid,nodev,barrier=1                            wait,slotselect
 /dev/block/persist                                     /mnt/vendor/persist     ext4    rw,noatime                                            defaults
 /dev/block/bluetooth                                   /vendor/bt_firmware     vfat    ro,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0            defaults,slotselect
 # Need to have this entry in here even though the mount point itself is no longer needed.
