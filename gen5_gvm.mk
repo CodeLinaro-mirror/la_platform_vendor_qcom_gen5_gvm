@@ -222,6 +222,7 @@ PRODUCT_PROPERTY_OVERRIDES  += \
 PRODUCT_PROPERTY_OVERRIDES += ro.control_privapp_permissions=enforce
 
 $(call inherit-product, packages/services/Car/car_product/build/car.mk)
+PRODUCT_PROPERTY_OVERRIDES += ro.vendor.asymmetric_support=true
 
 PRODUCT_NAME := gen5_gvm
 PRODUCT_DEVICE := gen5_gvm
