@@ -519,9 +519,18 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@5.0 \
     android.hardware.audio.effect@5.0-impl
 
+# Soong namespace & variables
+SOONG_CONFIG_NAMESPACES     += qti
+SOONG_CONFIG_qti            += IS_GEN5_GVM IS_GEN4_GVM IS_CDCCOMM IS_GEN3_GVM
+
+# Pick exactly one:
+SOONG_CONFIG_qti_IS_GEN5_GVM := true
+SOONG_CONFIG_qti_IS_GEN4_GVM := false
+SOONG_CONFIG_qti_IS_CDCCOMM  := false
+SOONG_CONFIG_qti_IS_GEN3_GVM := false
+
 #enable gptp
 PRODUCT_PACKAGES += qgptp\
-            gptp_cfg.ini \
             libgptp \
             libgptp_test
 
