@@ -799,6 +799,11 @@ endif
 PRODUCT_VENDOR_PROPERTIES += \
     ro.boot.audio=awe
 
+AB_OTA_POSTINSTALL_CONFIG += \
+               RUN_POSTINSTALL_vendor=true \
+               FILESYSTEM_TYPE_vendor=ext4 \
+               POSTINSTALL_OPTIONAL_vendor=true
+
 ###################################################################################
 # This is the End of target.mk file.
 # Now, Pickup other split product.mk files:
