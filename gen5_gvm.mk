@@ -221,7 +221,11 @@ PRODUCT_PROPERTY_OVERRIDES  += \
 
 PRODUCT_PROPERTY_OVERRIDES += ro.control_privapp_permissions=enforce
 
-$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+#$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+$(call inherit-product, device/qcom/qssi_au_64/qssi_au_64_system_generic.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car_generic_system.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car_system_ext.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car_product.mk)
 
 PRODUCT_NAME := gen5_gvm
 PRODUCT_DEVICE := gen5_gvm
@@ -787,8 +791,8 @@ PRODUCT_PROPERTY_OVERRIDES += persist.vendor.qcom.bluetooth.soc1=rome
 ifeq ($(TARGET_SINGLE_TREE), true)
   # Include mainline components and QSSI whitelist
   ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
-    $(call inherit-product, device/qcom/qssi_au/qssi_au_whitelist.mk)
-    PRODUCT_ARTIFACT_PATH_REQUIREMENT_IGNORE_PATHS := /system/system_ext/
+    #$(call inherit-product, device/qcom/qssi_au/qssi_au_whitelist.mk)
+    #PRODUCT_ARTIFACT_PATH_REQUIREMENT_IGNORE_PATHS := /system/system_ext/
     PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS := false
   endif
 
