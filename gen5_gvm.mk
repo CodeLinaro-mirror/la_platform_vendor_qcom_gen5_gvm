@@ -557,8 +557,7 @@ PRODUCT_PACKAGES_DEBUG += vhalserver_fuzzer
 
 #PRODUCT_PACKAGES += android.hardware.automotive.audiocontrol@1.0-service
 
-PRODUCT_PACKAGES += android.hardware.health-service.example \
-                    android.hardware.dumpstate-service.example \
+PRODUCT_PACKAGES += android.hardware.dumpstate-service.example \
                     com.android.hardware.thermal
 
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey
