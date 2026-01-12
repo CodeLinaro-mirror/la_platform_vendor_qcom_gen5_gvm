@@ -6,11 +6,13 @@ ENABLE_AIDL_VHAL := true
 ENABLE_AIDL_SENSOR := true
 # U-BRINGUP disable display
 TARGET_DISABLE_DISPLAY := false
+TARGET_DISABLE_DPRX := false
 TARGET_IS_HEADLESS := false
 TARGET_DISABLE_CODEC2 := true
 TARGET_DISABLE_VPP_FILTER := true
 TARGET_DISABLE_HSI2S_DLKM := false
 TARGET_DISABLE_DISPLAY_DLKM := false
+TARGET_DISABLE_DPRX_DLKM := false
 TARGET_DISABLE_AIS_DLKM := true
 TARGET_DISABLE_LIBVIRTDIAG := true
 
@@ -221,7 +223,13 @@ PRODUCT_PROPERTY_OVERRIDES  += \
 
 PRODUCT_PROPERTY_OVERRIDES += ro.control_privapp_permissions=enforce
 
-$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+PRODUCT_PROPERTY_OVERRIDES += ro.vendor.asymmetric_support=true
+
+#$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+$(call inherit-product, device/qcom/qssi_au_64/qssi_au_64_system_generic.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car_generic_system.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car_system_ext.mk)
+$(call inherit-product, packages/services/Car/car_product/build/car_product.mk)
 
 PRODUCT_NAME := gen5_gvm
 PRODUCT_DEVICE := gen5_gvm
@@ -338,6 +346,11 @@ ifeq ($(TARGET_ENABLE_FASTRPC_TEST), true)
  PRODUCT_PACKAGES_DEBUG += calculator
  PRODUCT_PACKAGES_DEBUG += libcalculator
  PRODUCT_PACKAGES_DEBUG += libcalculator_skel
+ PRODUCT_PACKAGES_DEBUG += hap_example
+ PRODUCT_PACKAGES_DEBUG += libhap_example
+ PRODUCT_PACKAGES_DEBUG += libhap_example_skel
+ PRODUCT_PACKAGES_DEBUG += dspqueue_sample
+ PRODUCT_PACKAGES_DEBUG += libdspqueue_sample_skel
 endif
 
 #Android EGL implementation
@@ -522,7 +535,9 @@ PRODUCT_PACKAGES += qavb_app \
 
 #eavb fe lib and app
 PRODUCT_PACKAGES += libeavbfe \
-            eavbfe_test
+            eavbfe_test \
+            libqavb_fe_pcm_plugin \
+            tinyalsa_eavbfe
 
 #Boot control HAL test app
 PRODUCT_PACKAGES_DEBUG += bootctl
@@ -649,8 +664,6 @@ PRODUCT_VENDOR_PROPERTIES += media.stagefright.enable-player=true \
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.use_data_netmgrd=true \
                             persist.vendor.data.mode=concurrent
 
-#system props for time-services
-PRODUCT_VENDOR_PROPERTIES += persist.timed.enable=true
 
 # system prop for opengles version
 # 196608 is decimal for 0x30000 to report version 3
@@ -658,23 +671,11 @@ PRODUCT_VENDOR_PROPERTIES += persist.timed.enable=true
 # 196610 is decimal for 0x30002 to report version 3.2
 PRODUCT_VENDOR_PROPERTIES += ro.opengles.version=196610
 
-# system property for maximum number of HFP client connections
-PRODUCT_VENDOR_PROPERTIES += bt.max.hfpclient.connections=1
-
 # system prop to turn on CdmaLTEPhone always
 PRODUCT_VENDOR_PROPERTIES += telephony.lteOnCdmaDevice=1
 
-#Simulate sdcard on /data/media
-PRODUCT_VENDOR_PROPERTIES += persist.fuse_sdcard=true
 
-#system prop for wipower support
-PRODUCT_VENDOR_PROPERTIES += ro.bluetooth.emb_wp_mode=false \
-                            ro.bluetooth.wipower=false
-
-PRODUCT_VENDOR_PROPERTIES += persist.vendor.service.bt.a2dp.sink=true \
-                            persist.vendor.btstack.enable.splita2dp=false \
-                            persist.vendor.service.bdroid.sibs=false \
-                            persist.bt.clock_boottime_alarm=false
+PRODUCT_VENDOR_PROPERTIES += persist.vendor.service.bdroid.sibs=false
 
 # system prop for Hardware type Automotive
 PRODUCT_VENDOR_PROPERTIES += ro.hardware.type=automotive
@@ -689,20 +690,6 @@ PRODUCT_VENDOR_PROPERTIES += ro.qc.sdk.audio.fluencetype=none \
                             persist.audio.fluence.voicecall=true \
                             persist.audio.fluence.voicerec=false \
                             persist.audio.fluence.speaker=true
-
-# system prop for RmNet Data
-PRODUCT_VENDOR_PROPERTIES += persist.rmnet.data.enable=true \
-                            persist.data.wda.enable=true \
-                            persist.data.df.dl_mode=5 \
-                            persist.data.df.ul_mode=5 \
-                            persist.data.df.agg.dl_pkt=10 \
-                            persist.data.df.agg.dl_size=4096 \
-                            persist.data.df.mux_count=8 \
-                            persist.data.df.iwlan_mux=9 \
-                            persist.data.df.dev_name=rmnet_usb0
-
-# property to enable user to access Google WFD settings
-PRODUCT_VENDOR_PROPERTIES += persist.debug.wfd.enable=1
 
 # property to choose between virtual/external wfd display
 PRODUCT_VENDOR_PROPERTIES += persist.sys.wfd.virtual=0
@@ -730,21 +717,6 @@ PRODUCT_VENDOR_PROPERTIES += sys.qca1530=detect
 
 # Enable stm events
 PRODUCT_VENDOR_PROPERTIES += persist.debug.coresight.config=stm-events
-
-# hwui properties
-PRODUCT_VENDOR_PROPERTIES += ro.hwui.texture_cache_size=72 \
-                            ro.hwui.layer_cache_size=48 \
-                            ro.hwui.r_buffer_cache_size=8 \
-                            ro.hwui.path_cache_size=32 \
-                            ro.hwui.gradient_cache_size=1 \
-                            ro.hwui.drop_shadow_cache_size=6 \
-                            ro.hwui.texture_cache_flushrate=0.4 \
-                            ro.hwui.text_small_cache_width=1024 \
-                            ro.hwui.text_small_cache_height=1024 \
-                            ro.hwui.text_large_cache_width=2048 \
-                            ro.hwui.text_large_cache_height=1024 \
-
-PRODUCT_VENDOR_PROPERTIES += config.disable_rtt=true
 
 #Bringup properties
 PRODUCT_VENDOR_PROPERTIES += persist.sys.force_sw_gles=1 \
@@ -775,9 +747,6 @@ PRODUCT_VENDOR_PROPERTIES += ro.lmk.kill_heaviest_task=true \
 #Property to enable scroll pre-obtain view
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.scroll.preobtain.enable=true
 
-#Expose aux camera for below packages
-PRODUCT_VENDOR_PROPERTIES += vendor.camera.aux.packagelist=org.codeaurora.snapcam
-
 #Display mirroring
 PRODUCT_VENDOR_PROPERTIES += vendor.display.builtin_mirroring=true
 
@@ -795,15 +764,6 @@ PRODUCT_VENDOR_PROPERTIES += persist.vendor.car.lpm=true
 # default wifi country code
 PRODUCT_VENDOR_PROPERTIES += ro.boot.wificountrycode=us
 
-# The property "persist.bluetooth.enablenewavrcp" is introduced in AOSP.
-# See commit e63f6d6bda16bd94d43537fc5db754a103c6a757
-# (1) If the property is set as true, it indicates that AVRCP(TG) is enabled.
-# (2) If the property is set as false, it indicates that AVRCP(CT) is enabled.
-# In Fluoride Bluetooth stack, the default value for the property is true. This is valid with Mobile SP.
-# However in Automotive SP, AVRCP(CT) is enabled in Car UI.
-# So the property should be set as false.
-PRODUCT_VENDOR_PROPERTIES += persist.bluetooth.enablenewavrcp=false
-
 # Add gsi avb keys
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 
@@ -817,8 +777,8 @@ PRODUCT_PROPERTY_OVERRIDES += persist.vendor.qcom.bluetooth.soc1=rome
 ifeq ($(TARGET_SINGLE_TREE), true)
   # Include mainline components and QSSI whitelist
   ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
-    $(call inherit-product, device/qcom/qssi_au/qssi_au_whitelist.mk)
-    PRODUCT_ARTIFACT_PATH_REQUIREMENT_IGNORE_PATHS := /system/system_ext/
+    #$(call inherit-product, device/qcom/qssi_au/qssi_au_whitelist.mk)
+    #PRODUCT_ARTIFACT_PATH_REQUIREMENT_IGNORE_PATHS := /system/system_ext/
     PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS := false
   endif
 
@@ -827,6 +787,11 @@ endif
 
 PRODUCT_VENDOR_PROPERTIES += \
     ro.boot.audio=awe
+
+AB_OTA_POSTINSTALL_CONFIG += \
+               RUN_POSTINSTALL_vendor=true \
+               FILESYSTEM_TYPE_vendor=ext4 \
+               POSTINSTALL_OPTIONAL_vendor=true
 
 ###################################################################################
 # This is the End of target.mk file.
