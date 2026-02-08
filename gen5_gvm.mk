@@ -543,7 +543,9 @@ PRODUCT_PACKAGES += qavb_app \
 PRODUCT_PACKAGES += libeavbfe \
             eavbfe_test \
             libqavb_fe_pcm_plugin \
-            tinyalsa_eavbfe
+            tinyalsa_eavbfe \
+            libsndcardparsereavb
+
 
 #Boot control HAL test app
 PRODUCT_PACKAGES_DEBUG += bootctl
