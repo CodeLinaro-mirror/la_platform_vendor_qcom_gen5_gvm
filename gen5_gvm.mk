@@ -559,7 +559,7 @@ PRODUCT_PACKAGES_DEBUG += vhalserver_fuzzer
 
 PRODUCT_PACKAGES += android.hardware.health-service.example \
                     android.hardware.dumpstate-service.example \
-                    android.hardware.thermal-service.example
+                    com.android.hardware.thermal
 
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 
