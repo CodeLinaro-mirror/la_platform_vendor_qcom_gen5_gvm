@@ -107,10 +107,7 @@ BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := false
 EXCLUDE_LOCATION_FEATURES := true
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := false
 TARGET_FWK_SUPPORTS_AV_VALUEADDS := true
-#TARGET_FWK_SUPPORTS_FULL_VALUEADDS := false
-ifeq ($(TARGET_SINGLE_TREE), true)
-  TARGET_FWK_SUPPORTS_FULL_VALUEADDS := true
-endif
+
 TARGET_USES_AOSP_FOR_WLAN := true
 
 
@@ -281,7 +278,7 @@ TARGET_USES_QMAA_OVERRIDE_GPT := false
 TARGET_USES_QMAA_OVERRIDE_KERNEL_TESTS_INTERNAL := false
 TARGET_USES_QMAA_OVERRIDE_KMGK := true
 TARGET_USES_QMAA_OVERRIDE_MM_DRV := true
-TARGET_USES_QMAA_OVERRIDE_MSMIRQBALANCE := false
+TARGET_USES_QMAA_OVERRIDE_MSMIRQBALANCE := true
 TARGET_USES_QMAA_OVERRIDE_OPENVX  := false
 TARGET_USES_QMAA_OVERRIDE_PERF := false
 TARGET_USES_QMAA_OVERRIDE_REMOTE_EFS := false
@@ -503,7 +500,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 #----------------------------------------------------------------------
 ifeq ($(strip $(BOARD_HAS_QCOM_WLAN)),true)
 # Multiple chips
-TARGET_WLAN_CHIP := qca6390 qca6490 kiwi_v2 qcn7605 qca6490_cnss2
+TARGET_WLAN_CHIP := qca6390 qca6490 kiwi_v2 qcn7605 qca6490_cnss2 kiwi_v2_cnss2
 include device/qcom/wlan/msmnile_au/wlan.mk
 endif
 
@@ -522,9 +519,18 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@5.0 \
     android.hardware.audio.effect@5.0-impl
 
+# Soong namespace & variables
+SOONG_CONFIG_NAMESPACES     += qti
+SOONG_CONFIG_qti            += IS_GEN5_GVM IS_GEN4_GVM IS_CDCCOMM IS_GEN3_GVM
+
+# Pick exactly one:
+SOONG_CONFIG_qti_IS_GEN5_GVM := true
+SOONG_CONFIG_qti_IS_GEN4_GVM := false
+SOONG_CONFIG_qti_IS_CDCCOMM  := false
+SOONG_CONFIG_qti_IS_GEN3_GVM := false
+
 #enable gptp
 PRODUCT_PACKAGES += qgptp\
-            gptp_cfg.ini \
             libgptp \
             libgptp_test
 
@@ -551,9 +557,8 @@ PRODUCT_PACKAGES_DEBUG += vhalserver_fuzzer
 
 #PRODUCT_PACKAGES += android.hardware.automotive.audiocontrol@1.0-service
 
-PRODUCT_PACKAGES += android.hardware.health-service.example \
-                    android.hardware.dumpstate-service.example \
-                    android.hardware.thermal-service.example
+PRODUCT_PACKAGES += android.hardware.dumpstate-service.example \
+                    com.android.hardware.thermal
 
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 
@@ -773,6 +778,8 @@ PRODUCT_PACKAGES += android.hardware.bluetooth-service-qti1.rc
 
 # Set default SOC type for new BT
 PRODUCT_PROPERTY_OVERRIDES += persist.vendor.qcom.bluetooth.soc1=rome
+
+BOARD_HAVE_QCOM_BLE_AUDIO_W := true
 
 ifeq ($(TARGET_SINGLE_TREE), true)
   # Include mainline components and QSSI whitelist

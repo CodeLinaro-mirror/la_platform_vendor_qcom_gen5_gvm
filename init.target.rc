@@ -160,11 +160,11 @@ on property:init.svc.zygote=running
 
 on property:service.bootanim.exit=0
     write /dev/console "boot_kpi: K - USER Boot Animation Start"
-    write /sys/kernel/boot_kpi/kpi_values "M - USER Boot Animation Start"
+    write /sys/kernel/boot_kpi/kpi_values "K - USER Boot Animation Start"
 
 on property:sys.boot_completed=1
     write /dev/console "boot_kpi: K - USER Android Boot Complete"
-    write /sys/kernel/boot_kpi/kpi_values "M - USER Android Boot Complete"
+    write /sys/kernel/boot_kpi/kpi_values "K - USER Android Boot Complete"
 
 on property:init.svc.surfaceflinger=running
     write /dev/console "boot_kpi: M - USER SurfaceFlinger Start"
