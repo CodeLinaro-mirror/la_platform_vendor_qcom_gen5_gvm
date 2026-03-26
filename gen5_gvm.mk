@@ -524,7 +524,6 @@ PRODUCT_PACKAGES += \
 
 #enable gptp
 PRODUCT_PACKAGES += qgptp\
-            gptp_cfg.ini \
             libgptp \
             libgptp_test
 

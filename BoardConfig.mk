@@ -282,6 +282,15 @@ SOONG_CONFIG_android_hardware_audio += run_64bit
 SOONG_CONFIG_android_hardware_audio_run_64bit := true
 
 #----------------------------------------------------------------------
+# namespace definition GPTP specific
+#----------------------------------------------------------------------
+SOONG_CONFIG_NAMESPACES += qtigptp
+SOONG_CONFIG_qtigptp += gen5gvm gen4gvm cdccomm
+SOONG_CONFIG_qtigptp_gen5gvm := true
+SOONG_CONFIG_qtigptp_gen4gvm := false
+SOONG_CONFIG_qtigptp_cdccomm := false
+
+#----------------------------------------------------------------------
 # wlan specific
 #----------------------------------------------------------------------
 ifeq ($(strip $(BOARD_HAS_QCOM_WLAN)),true)
