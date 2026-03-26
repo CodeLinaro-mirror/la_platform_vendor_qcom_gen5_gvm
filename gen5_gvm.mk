@@ -110,8 +110,9 @@ TARGET_FWK_SUPPORTS_AV_VALUEADDS := true
 
 TARGET_USES_AOSP_FOR_WLAN := true
 
-
+ifneq ($(TARGET_BOARD_DERIVATIVE_SUFFIX),_qmaa)
 BOARD_HAS_QCOM_WLAN := true
+endif
 
 
 ENABLE_CAR_POWER_MANAGER := true
@@ -792,6 +793,8 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Now, Pickup other split product.mk files:
 ###################################################################################
 # TODO: Relocate the system product.mk files pickup into qssi lunch, once it is up.
+ifeq ($(filter $(TARGET_BOARD_DERIVATIVE_SUFFIX), _qmaa),)
 $(call inherit-product-if-exists, vendor/qcom/defs/product-defs/system/*.mk)
 $(call inherit-product-if-exists, vendor/qcom/defs/product-defs/vendor/*.mk)
+endif
 ###################################################################################
