@@ -732,10 +732,7 @@ PRODUCT_VENDOR_PROPERTIES += vendor.perf.gestureflingboost.enable=true
 
 #Enable ULMK properties
 PRODUCT_VENDOR_PROPERTIES += ro.lmk.kill_heaviest_task=true \
-                            ro.lmk.kill_timeout_ms=15 \
-                            ro.lmk.enhance_batch_kill=true \
-                            ro.lmk.enable_adaptive_lmk=true \
-                            ro.lmk.vmpressure_file_min=80640 \
+                            ro.lmk.kill_timeout_ms=15
 
 #Property to enable scroll pre-obtain view
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.scroll.preobtain.enable=true
