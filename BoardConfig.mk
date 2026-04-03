@@ -329,3 +329,10 @@ ENABLE_CAMERA_SERVICE := true
 #   2. From build/make/core/board_config.mk
 #which impacts duplicates found in vendor_dlkm partition while building image
 BOARD_VENDOR_KERNEL_MODULES := $(sort $(BOARD_VENDOR_KERNEL_MODULES))
+
+ifneq (,$(filter cp2a next,$(strip $(TARGET_RELEASE_PLATFORM))))
+#Namespace definition for Rust dependencies that come from Android for sec-userspace
+SOONG_CONFIG_NAMESPACES += ssg_rustaceans
+SOONG_CONFIG_ssg_rustaceans += android_shipping_level
+SOONG_CONFIG_ssg_rustaceans_android_shipping_level := android17
+endif

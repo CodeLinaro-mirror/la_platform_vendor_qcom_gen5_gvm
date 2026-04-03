@@ -30,7 +30,7 @@ Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 SPDX-License-Identifier: BSD-3-Clause-Clear
 -->
 
-<manifest version="1.0" type="device" target-level="202504">
+<manifest version="1.0" type="device" target-level="202604">
     <hal format="aidl">
         <name>android.hardware.automotive.audiocontrol</name>
         <version>5</version>
