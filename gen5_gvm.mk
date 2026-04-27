@@ -523,7 +523,8 @@ PRODUCT_PACKAGES += \
 #enable gptp
 PRODUCT_PACKAGES += qgptp\
             libgptp \
-            libgptp_test
+            libgptp_test \
+            qgptp_powerservice
 
 #enable qeavb
 PRODUCT_PACKAGES += qavb_app \
