@@ -368,7 +368,6 @@ ENABLE_MEMTRACK_AIDL_HAL := true
 
 -include $(QCPATH)/common/config/qtic-config.mk
 
-PRODUCT_BOOT_JARS += tcmiface
 
 ifneq ($(TARGET_NO_TELEPHONY), true)
  PRODUCT_BOOT_JARS += telephony-ext
