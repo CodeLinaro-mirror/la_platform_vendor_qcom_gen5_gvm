@@ -191,7 +191,7 @@ ifeq ($(KERNEL_DEFCONFIG),)
     endif
 endif
 
-BOARD_DO_NOT_STRIP_VENDOR_MODULES := true
+BOARD_DO_NOT_STRIP_VENDOR_MODULES := false
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
 TARGET_USES_QCOM_BSP := false
@@ -282,6 +282,15 @@ SOONG_CONFIG_android_hardware_audio += run_64bit
 SOONG_CONFIG_android_hardware_audio_run_64bit := true
 
 #----------------------------------------------------------------------
+# namespace definition GPTP specific
+#----------------------------------------------------------------------
+SOONG_CONFIG_NAMESPACES += qtigptp
+SOONG_CONFIG_qtigptp += gen5gvm gen4gvm cdccomm
+SOONG_CONFIG_qtigptp_gen5gvm := true
+SOONG_CONFIG_qtigptp_gen4gvm := false
+SOONG_CONFIG_qtigptp_cdccomm := false
+
+#----------------------------------------------------------------------
 # wlan specific
 #----------------------------------------------------------------------
 ifeq ($(strip $(BOARD_HAS_QCOM_WLAN)),true)
@@ -296,8 +305,10 @@ $(call soong_config_set,qti,IS_ANDROID_SHIPPING_W,true)
 # Now, Pickup other split Board.mk files:
 #################################################################################
 # TODO: Relocate the system Board.mk files pickup into qssi lunch, once it is up.
--include vendor/qcom/defs/board-defs/system/*.mk
--include vendor/qcom/defs/board-defs/vendor/*.mk
+ifeq ($(filter $(TARGET_BOARD_DERIVATIVE_SUFFIX), _qmaa),)
+ -include vendor/qcom/defs/board-defs/system/*.mk
+ -include vendor/qcom/defs/board-defs/vendor/*.mk
+endif
 #################################################################################
 
 include device/qcom/sepolicy_vndr/SEPolicy.mk

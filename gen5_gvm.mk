@@ -110,8 +110,9 @@ TARGET_FWK_SUPPORTS_AV_VALUEADDS := true
 
 TARGET_USES_AOSP_FOR_WLAN := true
 
-
+ifneq ($(TARGET_BOARD_DERIVATIVE_SUFFIX),_qmaa)
 BOARD_HAS_QCOM_WLAN := true
+endif
 
 
 ENABLE_CAR_POWER_MANAGER := true
@@ -519,20 +520,11 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@5.0 \
     android.hardware.audio.effect@5.0-impl
 
-# Soong namespace & variables
-SOONG_CONFIG_NAMESPACES     += qti
-SOONG_CONFIG_qti            += IS_GEN5_GVM IS_GEN4_GVM IS_CDCCOMM IS_GEN3_GVM
-
-# Pick exactly one:
-SOONG_CONFIG_qti_IS_GEN5_GVM := true
-SOONG_CONFIG_qti_IS_GEN4_GVM := false
-SOONG_CONFIG_qti_IS_CDCCOMM  := false
-SOONG_CONFIG_qti_IS_GEN3_GVM := false
-
 #enable gptp
 PRODUCT_PACKAGES += qgptp\
             libgptp \
-            libgptp_test
+            libgptp_test \
+            qgptp_powerservice
 
 #enable qeavb
 PRODUCT_PACKAGES += qavb_app \
@@ -557,9 +549,8 @@ PRODUCT_PACKAGES_DEBUG += vhalserver_fuzzer
 
 #PRODUCT_PACKAGES += android.hardware.automotive.audiocontrol@1.0-service
 
-PRODUCT_PACKAGES += android.hardware.health-service.example \
-                    android.hardware.dumpstate-service.example \
-                    android.hardware.thermal-service.example
+PRODUCT_PACKAGES += android.hardware.dumpstate-service.example \
+                    com.android.hardware.thermal
 
 PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 
@@ -721,9 +712,6 @@ PRODUCT_VENDOR_PROPERTIES += audio.offload.gapless.enabled=true
 # initialize QCA1530 detection
 PRODUCT_VENDOR_PROPERTIES += sys.qca1530=detect
 
-# Enable stm events
-PRODUCT_VENDOR_PROPERTIES += persist.debug.coresight.config=stm-events
-
 #Bringup properties
 PRODUCT_VENDOR_PROPERTIES += persist.sys.force_sw_gles=1 \
                             persist.vendor.radio.atfwd.start=true \
@@ -745,10 +733,7 @@ PRODUCT_VENDOR_PROPERTIES += vendor.perf.gestureflingboost.enable=true
 
 #Enable ULMK properties
 PRODUCT_VENDOR_PROPERTIES += ro.lmk.kill_heaviest_task=true \
-                            ro.lmk.kill_timeout_ms=15 \
-                            ro.lmk.enhance_batch_kill=true \
-                            ro.lmk.enable_adaptive_lmk=true \
-                            ro.lmk.vmpressure_file_min=80640 \
+                            ro.lmk.kill_timeout_ms=15
 
 #Property to enable scroll pre-obtain view
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.scroll.preobtain.enable=true
@@ -806,6 +791,8 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Now, Pickup other split product.mk files:
 ###################################################################################
 # TODO: Relocate the system product.mk files pickup into qssi lunch, once it is up.
+ifeq ($(filter $(TARGET_BOARD_DERIVATIVE_SUFFIX), _qmaa),)
 $(call inherit-product-if-exists, vendor/qcom/defs/product-defs/system/*.mk)
 $(call inherit-product-if-exists, vendor/qcom/defs/product-defs/vendor/*.mk)
+endif
 ###################################################################################
