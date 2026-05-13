@@ -767,8 +767,6 @@ PRODUCT_PACKAGES += android.hardware.bluetooth-service-qti1.rc
 # Set default SOC type for new BT
 PRODUCT_PROPERTY_OVERRIDES += persist.vendor.qcom.bluetooth.soc1=rome
 
-BOARD_HAVE_QCOM_BLE_AUDIO_W := true
-
 ifeq ($(TARGET_SINGLE_TREE), true)
   # Include mainline components and QSSI whitelist
   ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),29))
