@@ -366,7 +366,6 @@ ENABLE_MEMTRACK_AIDL_HAL := true
 
 -include $(QCPATH)/common/config/qtic-config.mk
 
-PRODUCT_BOOT_JARS += tcmiface
 
 ifneq ($(TARGET_NO_TELEPHONY), true)
  PRODUCT_BOOT_JARS += telephony-ext
@@ -648,8 +647,6 @@ PRODUCT_VENDOR_PROPERTIES += media.stagefright.enable-player=true \
                             media.stagefright.enable-qcp=true \
                             media.stagefright.enable-fma2dp=true \
                             media.stagefright.enable-scan=true \
-                            mmp.enable.3g2=true \
-                            media.aac_51_output_enabled=true \
                             mm.enable.smoothstreaming=true
 
 #13631487 is decimal sum of supported codecs in AAL
