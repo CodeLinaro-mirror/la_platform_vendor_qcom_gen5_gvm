@@ -366,7 +366,6 @@ ENABLE_MEMTRACK_AIDL_HAL := true
 
 -include $(QCPATH)/common/config/qtic-config.mk
 
-PRODUCT_BOOT_JARS += tcmiface
 
 ifneq ($(TARGET_NO_TELEPHONY), true)
  PRODUCT_BOOT_JARS += telephony-ext
@@ -448,10 +447,12 @@ PRODUCT_HOST_PACKAGES += \
 PRODUCT_PACKAGES += \
     libhealthd.msm
 
-# MTMD enablement
+# MTMD enablement, for cmu lunch separate the display and input port xml
+ifeq (,$(filter gen5_gvm_cmu, $(TARGET_BOARD_PLATFORM)$(TARGET_BOARD_SUFFIX)$(TARGET_BOARD_DERIVATIVE_SUFFIX)))
 PRODUCT_COPY_FILES += \
     device/qcom/gen5_gvm/input-port-associations.xml:$(TARGET_COPY_OUT_VENDOR)/etc/input-port-associations.xml \
     device/qcom/gen5_gvm/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
+endif
 
 DEVICE_MANIFEST_FILE := device/qcom/gen5_gvm/manifest.xml
 DEVICE_MATRIX_FILE   := device/qcom/common/compatibility_matrix.xml
@@ -523,7 +524,8 @@ PRODUCT_PACKAGES += \
 #enable gptp
 PRODUCT_PACKAGES += qgptp\
             libgptp \
-            libgptp_test
+            libgptp_test \
+            qgptp_powerservice
 
 #enable qeavb
 PRODUCT_PACKAGES += qavb_app \
@@ -647,8 +649,6 @@ PRODUCT_VENDOR_PROPERTIES += media.stagefright.enable-player=true \
                             media.stagefright.enable-qcp=true \
                             media.stagefright.enable-fma2dp=true \
                             media.stagefright.enable-scan=true \
-                            mmp.enable.3g2=true \
-                            media.aac_51_output_enabled=true \
                             mm.enable.smoothstreaming=true
 
 #13631487 is decimal sum of supported codecs in AAL
