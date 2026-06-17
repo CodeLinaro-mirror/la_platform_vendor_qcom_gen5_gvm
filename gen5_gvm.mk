@@ -415,6 +415,7 @@ PRODUCT_PACKAGES += $(PCIE_DLKM)
 #PRODUCT_PACKAGES += hsi2s.ko
 # HS-I2S test app
 PRODUCT_PACKAGES += hsi2s_test
+PRODUCT_PACKAGES += hsi2s_test2
 
 PRODUCT_PACKAGES += fs_config_files
 
