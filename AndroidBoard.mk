@@ -94,6 +94,23 @@ ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
  endif #ENABLE_AB
  LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
  include $(BUILD_PREBUILT)
+
+ include $(CLEAR_VARS)
+ LOCAL_MODULE       := fstab.hqx.seca.qcom
+ LOCAL_MODULE_TAGS  := optional
+ LOCAL_MODULE_CLASS := ETC
+ LOCAL_SRC_FILES := fstab/seca/fstab_AB_dynamic_partition_variant.seca_hqx.qti
+ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+ include $(BUILD_PREBUILT)
+
+ include $(CLEAR_VARS)
+ LOCAL_MODULE       := fstab.hgy.seca.qcom
+ LOCAL_MODULE_TAGS  := optional
+ LOCAL_MODULE_CLASS := ETC
+ LOCAL_SRC_FILES := fstab/seca/fstab_AB_dynamic_partition_variant.seca_hgy.qti
+ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
+ include $(BUILD_PREBUILT)
+
 else
  include $(CLEAR_VARS)
  LOCAL_MODULE       := fstab.hqx.nord.qcom

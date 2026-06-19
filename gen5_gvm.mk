@@ -149,6 +149,8 @@ ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   ifeq ($(ENABLE_AB), true)
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/seca/fstab_AB_dynamic_partition_variant.seca_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.seca.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/seca/fstab_AB_dynamic_partition_variant.seca_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hgy.seca.qcom
   else
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
@@ -413,6 +415,7 @@ PRODUCT_PACKAGES += $(PCIE_DLKM)
 #PRODUCT_PACKAGES += hsi2s.ko
 # HS-I2S test app
 PRODUCT_PACKAGES += hsi2s_test
+PRODUCT_PACKAGES += hsi2s_test2
 
 PRODUCT_PACKAGES += fs_config_files
 
@@ -536,7 +539,9 @@ PRODUCT_PACKAGES += qavb_app \
 PRODUCT_PACKAGES += libeavbfe \
             eavbfe_test \
             libqavb_fe_pcm_plugin \
-            tinyalsa_eavbfe
+            tinyalsa_eavbfe \
+            libsndcardparsereavb
+
 
 #Boot control HAL test app
 PRODUCT_PACKAGES_DEBUG += bootctl
@@ -559,6 +564,8 @@ PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 PRODUCT_PACKAGES += vndservicemanager
 PRODUCT_PACKAGES += fstab.qcom
 PRODUCT_PACKAGES += fstab.hqx.nord.qcom
+PRODUCT_PACKAGES += fstab.hgy.seca.qcom
+PRODUCT_PACKAGES += fstab.hqx.seca.qcom
 
 #add neuralnetworks
 PRODUCT_PACKAGES += android.hardware.neuralnetworks@1.0.vendor \
