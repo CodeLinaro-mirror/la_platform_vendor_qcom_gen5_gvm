@@ -66,27 +66,19 @@ PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
 BOARD_SHIPPING_API_LEVEL := 202604
 
 ALLOW_MISSING_DEPENDENCIES := true
+
+# Default Android A/B configuration
 ENABLE_AB ?= true
-# Disable virtual-ab by default
-ifeq ($(ENABLE_AB), true)
-  ENABLE_VIRTUAL_AB ?= true
-endif
-ifeq ($(ENABLE_VIRTUAL_AB), true)
-  ifeq ($(TARGET_SINGLE_TREE), true)
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
-  endif
-  ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),34))
-    # For OTA updates with shipping api level 34 and above.
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/vabc_features.mk)
-    PRODUCT_VENDOR_PROPERTIES += ro.virtual_ab.compression.threads=true
-  else
-    # For OTA updates with shipping api level 33 and below.
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/android_t_baseline.mk)
-  endif
-  PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := lz4
-endif
+
+# Enable virtual A/B
+ENABLE_VIRTUAL_AB := true
+
+# Enable virtual A/B compression
+$(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/vabc_features.mk)
+PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := lz4
+PRODUCT_VENDOR_PROPERTIES += ro.virtual_ab.compression.threads=true
+
 # Enable AVB 2.0
 BOARD_AVB_ENABLE := true
 BOARD_USES_QCNE := false
