@@ -19,6 +19,7 @@ ROOT_DIR="$PWD/../../../"
 MKDTBOIMGPY_PATH=$ROOT_DIR/system/libufdt/utils/src
 #echo "$MKDTBOIMGPY_PATH"
 IMG_PATH="$PWD/../gen5-kernel"
+RADIO_PATH="$PWD/radio"
 #echo "$IMG_PATH"
 cd $IMG_PATH
 OUTPATH="$PWD/../../../out/target/product/gen5_gvm"
@@ -66,11 +67,13 @@ python3 $PIL_PATH/image_header.py autogvm-bootloader.elf FVMAIN_COMPACT.Fv,0x0 \
 $ABSQC_PATH/sectools/Linux/sectools secure-image autogvm-boot.elf \
 	--image-id GVM1 \
 	--security-profile $SECURITY_PROFILE_PATH/nord_security_profile.xml \
+	$SECURITY_PROFILE_PATH/seca_security_profile.xml \
 	--sign --signing-mode TEST \
 	--outfile autogvm_signed-boot.elf
 $ABSQC_PATH/sectools/Linux/sectools secure-image autogvm-bootloader.elf \
 	--image-id GVM1 \
 	--security-profile $SECURITY_PROFILE_PATH/nord_security_profile.xml \
+	$SECURITY_PROFILE_PATH/seca_security_profile.xml \
 	--sign --signing-mode TEST \
 	--outfile autogvm_signed-bootloader.elf
 
@@ -93,3 +96,19 @@ echo "Creating the vm-bootloader.img"
 $ROOT_DIR/out/host/linux-x86/bin/mkuserimg_mke2fs $OUTPATH/scratch/bootloader \
 	$OUTPATH/vm-bootloader.img ext4 / 8388608 \
 	--journal_size=0
+
+# Ensure the target directory exists
+if [ ! -d "$RADIO_PATH" ]; then
+    mkdir -p "$RADIO_PATH"
+fi
+
+if [ ! -f "$OUTPATH/vm-bootloader.img" ]; then
+    echo "ERROR: vm-bootloader.img not found at $OUTPATH"
+    exit 1
+fi
+
+echo "Copying vm-bootloader.img to the radio folder"
+cp -f "$OUTPATH/vm-bootloader.img" "$RADIO_PATH/" || {
+    echo "ERROR: Failed to copy vm-bootloader.img to $RADIO_PATH"
+    exit 1
+}
