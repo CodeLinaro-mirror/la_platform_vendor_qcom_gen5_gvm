@@ -63,29 +63,22 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 SHIPPING_API_LEVEL := 37
 PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
+BOARD_SHIPPING_API_LEVEL := 202604
 
 ALLOW_MISSING_DEPENDENCIES := true
+
+# Default Android A/B configuration
 ENABLE_AB ?= true
-# Disable virtual-ab by default
-ifeq ($(ENABLE_AB), true)
-  ENABLE_VIRTUAL_AB ?= true
-endif
-ifeq ($(ENABLE_VIRTUAL_AB), true)
-  ifeq ($(TARGET_SINGLE_TREE), true)
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
-  endif
-  ifeq (true,$(call math_gt_or_eq,$(SHIPPING_API_LEVEL),34))
-    # For OTA updates with shipping api level 34 and above.
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/vabc_features.mk)
-    PRODUCT_VENDOR_PROPERTIES += ro.virtual_ab.compression.threads=true
-  else
-    # For OTA updates with shipping api level 33 and below.
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/android_t_baseline.mk)
-  endif
-  PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := lz4
-endif
+
+# Enable virtual A/B
+ENABLE_VIRTUAL_AB := true
+
+# Enable virtual A/B compression
+$(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/vabc_features.mk)
+PRODUCT_VIRTUAL_AB_COMPRESSION_METHOD := lz4
+PRODUCT_VENDOR_PROPERTIES += ro.virtual_ab.compression.threads=true
+
 # Enable AVB 2.0
 BOARD_AVB_ENABLE := true
 BOARD_USES_QCNE := false
@@ -149,6 +142,8 @@ ifeq ($(strip $(BOARD_DYNAMIC_PARTITION_ENABLE)),true)
   ifeq ($(ENABLE_AB), true)
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/seca/fstab_AB_dynamic_partition_variant.seca_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.seca.qcom
+    PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/seca/fstab_AB_dynamic_partition_variant.seca_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hgy.seca.qcom
   else
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hqx.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.hqx.nord.qcom
     PRODUCT_COPY_FILES += device/qcom/gen5_gvm/fstab/nord/fstab_non_AB_dynamic_partition_variant.nord_hgy.qti:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
@@ -447,10 +442,12 @@ PRODUCT_HOST_PACKAGES += \
 PRODUCT_PACKAGES += \
     libhealthd.msm
 
-# MTMD enablement
+# MTMD enablement, for cmu lunch separate the display and input port xml
+ifeq (,$(filter gen5_gvm_cmu, $(TARGET_BOARD_PLATFORM)$(TARGET_BOARD_SUFFIX)$(TARGET_BOARD_DERIVATIVE_SUFFIX)))
 PRODUCT_COPY_FILES += \
     device/qcom/gen5_gvm/input-port-associations.xml:$(TARGET_COPY_OUT_VENDOR)/etc/input-port-associations.xml \
     device/qcom/gen5_gvm/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
+endif
 
 DEVICE_MANIFEST_FILE := device/qcom/gen5_gvm/manifest.xml
 DEVICE_MATRIX_FILE   := device/qcom/common/compatibility_matrix.xml
@@ -556,6 +553,8 @@ PRODUCT_PACKAGES += qcar-gsi.avbpubkey
 PRODUCT_PACKAGES += vndservicemanager
 PRODUCT_PACKAGES += fstab.qcom
 PRODUCT_PACKAGES += fstab.hqx.nord.qcom
+PRODUCT_PACKAGES += fstab.hgy.seca.qcom
+PRODUCT_PACKAGES += fstab.hqx.seca.qcom
 
 #add neuralnetworks
 PRODUCT_PACKAGES += android.hardware.neuralnetworks@1.0.vendor \
