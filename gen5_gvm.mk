@@ -646,7 +646,6 @@ PRODUCT_VENDOR_PROPERTIES += media.stagefright.enable-player=true \
                             media.stagefright.enable-fma2dp=true \
                             media.stagefright.enable-scan=true \
                             mmp.enable.3g2=true \
-                            media.aac_51_output_enabled=true \
                             mm.enable.smoothstreaming=true
 
 #13631487 is decimal sum of supported codecs in AAL
