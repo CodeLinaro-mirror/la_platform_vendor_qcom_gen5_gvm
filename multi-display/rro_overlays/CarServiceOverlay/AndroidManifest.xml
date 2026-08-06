@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+SPDX-License-Identifier: BSD-3-Clause-Clear
+*/
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+           package="com.android.car.resources.mumdvendor">
+     <application android:hasCode="false"/>
+     <overlay android:priority="5004"
+              android:targetPackage="com.android.car.updatable"
+              android:targetName="CarServiceCustomization"
+              android:resourcesMap="@xml/overlays"
+              android:isStatic="true" />
+</manifest>

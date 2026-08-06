@@ -442,11 +442,12 @@ PRODUCT_HOST_PACKAGES += \
 PRODUCT_PACKAGES += \
     libhealthd.msm
 
-# MTMD enablement, for cmu lunch separate the display and input port xml
+#MUMD enablement on gen5_gvm lunch,cmu build uses gen5_gvm/multi-display/display_settings xml with 5 display ports
+#mapping seperate display and input xml files for gen5_gvm and gen5_gvm_cmu at gen5_gvm/multi-display/ and gen5_gvm_cmu/multi-display respectively
 ifeq (,$(filter gen5_gvm_cmu, $(TARGET_BOARD_PLATFORM)$(TARGET_BOARD_SUFFIX)$(TARGET_BOARD_DERIVATIVE_SUFFIX)))
 PRODUCT_COPY_FILES += \
-    device/qcom/gen5_gvm/input-port-associations.xml:$(TARGET_COPY_OUT_VENDOR)/etc/input-port-associations.xml \
-    device/qcom/gen5_gvm/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
+    device/qcom/gen5_gvm/multi-display/input-port-associations.xml:$(TARGET_COPY_OUT_VENDOR)/etc/input-port-associations.xml \
+    device/qcom/gen5_gvm/multi-display/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
 endif
 
 DEVICE_MANIFEST_FILE := device/qcom/gen5_gvm/manifest.xml
@@ -792,4 +793,28 @@ ifeq ($(filter $(TARGET_BOARD_DERIVATIVE_SUFFIX), _qmaa),)
 $(call inherit-product-if-exists, vendor/qcom/defs/product-defs/system/*.mk)
 $(call inherit-product-if-exists, vendor/qcom/defs/product-defs/vendor/*.mk)
 endif
+
+# ============================================
+# MUMD (Multi-User Multi-Display) Configuration
+# ============================================
+
+# Managed users permission
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.managed_users.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.managed_users.xml
+
+# IDC files for touch to wakeup function
+PRODUCT_COPY_FILES += \
+    device/qcom/gen5_gvm/multi-display/input/Vendor_0eef_Product_0210.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_0eef_Product_0210.idc \
+    device/qcom/gen5_gvm/multi-display/input/Vendor_0eef_Product_c000.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_0eef_Product_c000.idc
+
+# MUMD RRO overlays
+PRODUCT_PACKAGES += CarFrameworkResOverlayMultiDisplayRROGen5 \
+    CarServiceOverlayMultiDisplayRROGen5
+
+# Enable MZ audio by default
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.sys.max_profiles=5
+
+# Enable RRO package for passenger (secondary) user
+ENABLE_PASSENGER_SYSTEMUI_RRO := true
 ###################################################################################
