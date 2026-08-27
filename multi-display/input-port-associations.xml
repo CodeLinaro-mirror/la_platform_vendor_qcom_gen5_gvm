@@ -33,9 +33,19 @@ SPDX-License-Identifier: BSD-3-Clause-Clear
 -->
 
 <ports>
-    <port display="17"  input="usb-xhci-hcd.2.auto-1/input0" />
-    <port display="33"  input="usb-xhci-hcd.1.auto-1.1/input0" />
-    <port display="18"  input="usb-xhci-hcd.1.auto-1.2/input0" />
+    <port display="17"  input="usb-xhci-hcd.1.auto-1/input0" />
+</ports>
+
+<!--
+When multi display and respective touch inputs are connected,
+the input port associations mapping to be done for other display ports
+based on the input string populated.
+-->
+<!--
+    for ref
+    <port display="33"  input="usb-xhci-hcd.0.auto-1.2/input0" />
+    <port display="18"  input="usb-xhci-hcd.0.auto-1.3/input0" />
     <port display="19"  input="usb-xhci-hcd.1.auto-1.3/input0" />
     <port display="34"  input="usb-xhci-hcd.2.auto-1.2/input0" />
-</ports>
+-->
+

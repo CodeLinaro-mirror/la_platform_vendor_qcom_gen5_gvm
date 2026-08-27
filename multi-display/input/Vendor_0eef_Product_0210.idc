@@ -12,7 +12,7 @@ cursor.orientationAware = 1
 # This displayID matches the unique ID of the display created for device.
 # This will indicate to input flinger than it should link this input device
 # with the  display.
-touch.displayId = local:4630946780669082115
+touch.displayId = local:3904533439935568586
 
 # Allow touches while the screen is off
 touch.enableForInactiveViewport = 1
